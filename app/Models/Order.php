@@ -15,7 +15,7 @@ class Order extends Model
         'status',
         'currency',
         'shipping_amount',
-        'shipping method',
+        'shipping_method',
         'notes',
     ];
 
