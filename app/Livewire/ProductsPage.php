@@ -28,6 +28,10 @@ class ProductsPage extends Component
     #[Url]
     public $on_sale;
 
+    #[Url]
+    public $sort = 'latest';
+    
+    #[Url]
     public $price_range = 5000;
 
     public function render()
@@ -36,18 +40,31 @@ class ProductsPage extends Component
         if (!empty($this->selected_categories)) {
             $productQuery->whereIn('category_id', $this->selected_categories);
         }
+        
         if (!empty($this->selected_brands)) {
             $productQuery->whereIn('category_id', $this->selected_brands);
         }
+
         if ($this->featured) {
             $productQuery->where('is_featured', 1);
         }
+
         if ($this->featured) {
             $productQuery->where('on_sale', 1);
         }
+
         if ($this->price_range) {
             $productQuery->whereBetween('price', [0, $this->price_range]);
         }
+
+        if($this->sort == 'latest'){
+            $productQuery->latest();
+        }
+
+        if($this->sort == 'price'){
+            $productQuery->orderBy('price');
+        }
+
         return view('livewire.products-page', [
             'products' => $productQuery->paginate(6),
             'brands' => Brand::where('is_active', 1)->get(['id', 'name', 'slug']),
