@@ -16,9 +16,6 @@
             </thead>
             <tbody>
               @forelse ($cart_items as $item)
-   {{--            @php
-                dd($item)
-              @endphp --}}
               <tr wire:key="{{ $item['product_id'] }}">
                 <td class="py-4">
                   <div class="flex items-center">
